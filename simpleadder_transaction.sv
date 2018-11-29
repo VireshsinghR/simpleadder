@@ -8,9 +8,19 @@ class simpleadder_transaction extends uvm_sequence_item;
   rand bit [15:0]inb;
   rand bit [1:0]operation_sel;
   bit  [16:0]out;
+  bit rst;
+
+
   constraint operation_c {
-	operation_sel <= 2'b10 ;
+	//operation_sel inside {2'b01, 2'b10};
+	operation_sel== 2'b10;
 }
+
+/*  constraint inputs {
+	ina <=25;
+	inb <=25;
+  } */
+
   bit sig_en_i;
   bit sig_en_o;
   

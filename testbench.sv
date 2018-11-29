@@ -12,8 +12,12 @@ import uvm_pkg::*;
   `include "simpleadder_agent.sv"
   `include "simpleadder_env.sv"
   `include "simpleadder_test.sv"
-  `include "small_seq.sv"
- `include "small_test.sv"
+ // `include "small_seq.sv"
+  `include "subtractor_seq.sv"
+  `include "adder_seq.sv"
+  `include "adder.sv"
+ `include "sub_test.sv"
+ `include "add_test.sv"
 
 module simpleadder_tb_top;
   //import uvm_pkg ::*;
@@ -23,14 +27,17 @@ module simpleadder_tb_top;
   simpleadder dut (vif);
 	
   initial begin
-    vif.sig_clock=1'b1;
-    
-	vif.sig_rst=1'b1;
-	#20 vif.sig_rst=1'b0;
-    `uvm_info("id1", "Reset applied", UVM_MEDIUM)
-	#20 vif.sig_rst=1'b1;
-    `uvm_info("id1", "Reset released", UVM_MEDIUM)
-   //forever #5 vif.sig_clock=~vif.sig_clock;    //commeting here since clk hast to start running before reset,[caught in assertions]  
+	vif.sig_clock=1'b1;
+
+	//vif.sig_rst=1'b1;
+	//#5 vif.sig_rst=1'b0;
+
+    //`uvm_info("id1", "Reset applied", UVM_MEDIUM)
+    	   vif.operation = 2'bx; //caught in assertion-> operation shuold be x at rst [ even though it does not affect the functionality]
+//	    `uvm_info("id1", "operation xx", UVM_MEDIUM)
+//	#10 vif.sig_rst=1'b1;
+
+ //   `uvm_info("id1", "Reset released", UVM_MEDIUM)
   end
 
   initial begin
@@ -40,7 +47,7 @@ module simpleadder_tb_top;
   //`include "simpleadder_test.sv"
   initial begin
 	uvm_config_db #(virtual simpleadder_if)::set(uvm_root::get(), "uvm_test_top", "simpleadder_if", vif);
-   run_test("simpleadder_test");
+   run_test("sub_test");
   //  run_test("small_test");
 	#100;
     

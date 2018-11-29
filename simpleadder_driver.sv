@@ -21,8 +21,9 @@ class simpleadder_driver extends uvm_driver #(simpleadder_transaction);
     
     vif.sig_ina = 16'b0;
     vif.sig_inb = 16'b0;
-    vif.sig_en_i = 1'b0;
-    vif.operation = 2'bxx; 
+    //vif.sig_en_i = 1'b0;
+   // vif.operation = 2'bxx; 
+   // vif.operation = 2'b00; 
     forever 
       begin
 		
@@ -42,6 +43,16 @@ class simpleadder_driver extends uvm_driver #(simpleadder_transaction);
       end	
     end
    endtask
+
+   task reset_phase(uvm_phase phase);
+  	phase.raise_objection(this);
+  vif.sig_rst = 1'b1;
+  #5;
+  vif.sig_rst = 1'b0;
+  vif.operation = 2'bxx;
+  #20 vif.sig_rst = 1'b1;
+  phase.drop_objection(this);
+endtask: reset_phase 
 
 endclass : simpleadder_driver
   

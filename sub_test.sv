@@ -22,15 +22,13 @@ class sub_test extends simpleadder_test;
 
      task run_phase(uvm_phase phase);
      //  `uvm_info("SMALL TEST", "run task called", UVM_MEDIUM)
-       	subtractor_seq subt_seq;
+       subtractor_seq subt_seq;
 		
-       	subt_seq = subtractor_seq::type_id::create("subt_seq", this);
+       subt_seq = subtractor_seq::type_id::create("subt_seq", this);
         
 	phase.raise_objection(this);
-         subt_seq.start(sa_env.sa_agent.sa_seqr);
-       	phase.drop_objection(this);
-
+        subt_seq.start(sa_env.sa_agent.sa_seqr);
+       phase.drop_objection(this);
      endtask: run_phase
-
 endclass: sub_test
 
